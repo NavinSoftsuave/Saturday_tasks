@@ -1,66 +1,82 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## 📅 Date
+**2025-08-02**
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
+# Laravel Eloquent Relationships API Practice
 
-## About Laravel
+This project demonstrates the implementation and testing of **Laravel Eloquent relationships** using **API routes** and **Postman**.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ✅ Relationships Implemented and Tested
 
-## Learning Laravel
+### 1. One to One  
+**Models:** `User` & `Profile`
+- A user has one profile.
+- Endpoints:
+  - `POST /api/users/{id}/profile` → Create profile
+  - `GET /api/users/{id}/profile` → Get user with profile
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 2. One to Many  
+**Models:** `User` & `Post`
+- A user can have many posts.
+- Endpoints:
+  - `POST /api/users/{id}/posts` → Create a post for a user
+  - `GET /api/users/{id}/posts` → Get all posts of a user
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+### 3. Many to Many  
+**Models:** `User` & `Role`
+- A user can have many roles.
+- A role can belong to many users.
+- Pivot table: `role_user`
+- Endpoints:
+  - `POST /api/users/{id}/roles` → Assign multiple roles to a user
+  - `GET /api/users/{id}/roles` → Get all roles of a user
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+---
 
-### Premium Partners
+### 4. Has Many Through  
+**Example:** `Country → Users → Posts`  
+- A country has many posts through users.
+- Setup planned/tested as:
+  - `Country` has many `Posts` through `Users`
+- Endpoint (planned):
+  - `GET /api/countries/{id}/posts` → Get all posts of users from a country
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+---
 
-## Contributing
+### 5. One to One Polymorphic  
+**Example:** `User` & `Post` can both have one `Image`
+- One image belongs to either a user or a post.
+- Endpoint (planned):
+  - `POST /api/image/{type}/{id}` → Add image to user or post
+  - `GET /api/image/{type}/{id}` → Get image for user or post
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### 6. One to Many Polymorphic  
+**Example:** `User` & `Post` can have many `Comments`
+- Comments can belong to multiple models (users, posts).
+- Endpoint (planned):
+  - `POST /api/{type}/{id}/comments` → Add comment to user/post
+  - `GET /api/{type}/{id}/comments` → Get comments for user/post
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### 7. Many to Many Polymorphic  
+**Example:** `Post`, `Video` can both have multiple `Tags`
+- Tags can be reused across models.
+- Endpoint (planned):
+  - `POST /api/{type}/{id}/tags` → Assign tags to a model
+  - `GET /api/{type}/{id}/tags` → Get all tags for a model
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 🧪 Testing
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+All endpoints tested via **Postman** with **raw JSON input**. Each relationship has been validated using database results and response structures.
